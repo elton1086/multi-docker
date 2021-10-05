@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t eltoncs/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true eltoncs/react-test npm test
+
+after_success:
+  - docker build -t eltoncs/multi-client ./client
+  - docker build -t eltoncs/multi-nginx ./nginx
+  - docker build -t eltoncs/multi-server ./server
+  - docker build -t eltoncs/multi-worker ./worker
