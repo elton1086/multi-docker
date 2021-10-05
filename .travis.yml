@@ -13,3 +13,8 @@ after_success:
   - docker build -t eltoncs/multi-nginx ./nginx
   - docker build -t eltoncs/multi-server ./server
   - docker build -t eltoncs/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push eltoncs/multi-client
+  - docker push eltoncs/multi-nginx
+  - docker push eltoncs/multi-server
+  - docker push eltoncs/multi-worker
